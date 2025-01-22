@@ -28,7 +28,6 @@ public class TurretPointAtMouse : MonoBehaviour
 
         // Calcular la rotación en el plano 2D
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
         // Aplicar la rotación solo en el eje Z
         transform.rotation = Quaternion.Euler(-angle, 90, -90);
     }
