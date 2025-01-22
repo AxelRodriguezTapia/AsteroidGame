@@ -6,11 +6,14 @@ using UnityStandardAssets.CrossPlatformInput;
 public class PlayerShip : MonoBehaviour
 {
     public float shipSpeed = 10f; // Velocidad de la nave
-    private Rigidbody rb; // Referencia al Rigidbody2D del objeto
+    private Rigidbody rb; // Referencia al Rigidbody del objeto
+    public GameObject bulletPrefab; // Prefab de la bala
+    public Transform firePoint; // Punto de disparo (donde se instanciará la bala)
+
     // Start is called before the first frame update
     void Start()
     {
-        // Obtener la referencia al Rigidbody2D
+        // Obtener la referencia al Rigidbody
         rb = GetComponent<Rigidbody>();
     }
 
@@ -27,17 +30,23 @@ public class PlayerShip : MonoBehaviour
         rb.velocity = moveDirection * shipSpeed;
 
         // Detectar si el jugador presiona el botón de disparo
-        if (CrossPlatformInputManager.GetButton("Fire1"))
+        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
         {
             // Llamar al método de disparo
             Fire();
         }
     }
 
-    // Método para disparar (puedes implementar la lógica de disparo aquí)
+    // Método para disparar
     void Fire()
     {
         Debug.Log("Disparo realizado");
-        // Aquí puedes instanciar un proyectil, generar efectos, etc.
+
+        // Instanciar la bala en el punto de disparo
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+        // Obtener el Rigidbody de la bala y darle velocidad en la dirección en la que está mirando la torreta
+        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+        bulletRb.velocity = firePoint.up * 10f; // Ajusta la velocidad según sea necesario
     }
 }
