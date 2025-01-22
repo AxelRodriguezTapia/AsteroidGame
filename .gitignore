@@ -71,3 +71,73 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+.collabignore
+.idea/.idea.AsteroidGame/.idea/encodings.xml
+.idea/.idea.AsteroidGame/.idea/indexLayout.xml
+.idea/.idea.AsteroidGame/.idea/vcs.xml
+.idea/.idea.AsteroidGame/.idea/.gitignore
+.vscode/settings.json
+__MACOSX/assets/.___Scripts.meta
+__MACOSX/assets/.__Scenes.meta
+__MACOSX/assets/._Prefabs.meta
+__MACOSX/assets/._Standard Assets.meta
+__MACOSX/assets/._Textures & Materials.meta
+__MACOSX/assets/Prefabs/._Bullet.prefab.meta
+__MACOSX/assets/Prefabs/._PlayerShip.prefab.meta
+__MACOSX/assets/Prefabs/._Prefab Ship Parts.meta
+__MACOSX/assets/Prefabs/Prefab Ship Parts/._asteroids_ship0.prefab.meta
+__MACOSX/assets/Prefabs/Prefab Ship Parts/._asteroids_turret0.prefab.meta
+__MACOSX/assets/Standard Assets/._CrossPlatformInput.meta
+__MACOSX/assets/Standard Assets/._Editor.meta
+__MACOSX/assets/Standard Assets/._Fonts.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/._CrossPlatformInputGuidelines.txt.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/._Prefabs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/._Scripts.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/._Sprites.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Prefabs/._CarTiltControls.prefab.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Prefabs/._DualTouchControls.prefab.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Prefabs/._MobileAircraftControls.prefab.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Prefabs/._MobileSingleStickControl.prefab.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Prefabs/._MobileTiltControlRig.prefab.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/._AxisTouchButton.cs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/._ButtonHandler.cs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/._CrossPlatformInputManager.cs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/._InputAxisScrollbar.cs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/._Joystick.cs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/._MobileControlRig.cs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/._PlatformSpecific.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/._TiltInput.cs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/._TouchPad.cs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/._VirtualInput.cs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/PlatformSpecific/._MobileInput.cs.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Scripts/PlatformSpecific/._StandaloneInput.cs.meta
+__MACOSX/assets/Textures & Materials/._Space_Background.psd.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonAcceleratorOverSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonAcceleratorUpSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonArrowOverSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonArrowUpSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonBrakeOverSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonBrakeUpSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonCameraCycleUpSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonResetSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonSpacebarSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonThumbstickOverSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonThumbstickUpSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonTimescaleFullUpSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._ButtonTimescaleSlowUpSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._SliderBackgroundSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._SliderHandleSprite.png.meta
+__MACOSX/assets/Standard Assets/CrossPlatformInput/Sprites/._TouchpadSprite.png.meta
+__MACOSX/assets/Standard Assets/Editor/._CrossPlatformInput.meta
+__MACOSX/assets/Standard Assets/Editor/CrossPlatformInput/._CrossPlatformInputInitialize.cs.meta
+__MACOSX/assets/Standard Assets/Fonts/._OpenSans.meta
+__MACOSX/assets/Standard Assets/Fonts/._Unipix.ttf.meta
+__MACOSX/assets/Standard Assets/Fonts/OpenSans/._License!.txt.meta
+__MACOSX/assets/Standard Assets/Fonts/OpenSans/._OpenSansBold.ttf.meta
+__MACOSX/assets/Standard Assets/Fonts/OpenSans/._OpenSansLight.ttf.meta
+__MACOSX/assets/Standard Assets/Fonts/OpenSans/._OpenSansRegular.ttf.meta
+__MACOSX/assets/Standard Assets/Fonts/OpenSans/._OpenSansSemibold.ttf.meta
+__MACOSX/assets/Textures & Materials/._Bullet Mat.mat.meta
+__MACOSX/assets/Textures & Materials/._ShipBody0_Material.mat.meta
+__MACOSX/assets/Textures & Materials/._ShipTurret0_Material.mat.meta
+__MACOSX/assets/Textures & Materials/._Space_Background.psd
