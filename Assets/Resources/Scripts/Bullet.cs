@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 1f; // Velocidad de la bala
     private Rigidbody rb; // Rigidbody2D de la bala
     private Vector2 direction; // Ángulo de la dirección de la bala
 

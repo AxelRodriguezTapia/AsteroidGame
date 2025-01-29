@@ -5,7 +5,8 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerShip : MonoBehaviour
 {
-    public float shipSpeed = 10f; // Velocidad de la nave
+    public float shipSpeed = 2.5f; // Velocidad de la nave
+    public float fireSpeed = 10f; // Velocidad de la bala
     private Rigidbody rb; // Referencia al Rigidbody del objeto
     public GameObject bulletPrefab; // Prefab de la bala
     public Transform firePoint; // Punto de disparo (donde se instanciará la bala)
@@ -47,6 +48,6 @@ public class PlayerShip : MonoBehaviour
 
         // Obtener el Rigidbody de la bala y darle velocidad en la dirección en la que está mirando la torreta
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-        bulletRb.velocity = firePoint.up * 10f; // Ajusta la velocidad según sea necesario
+        bulletRb.velocity = firePoint.up * fireSpeed; // Ajusta la velocidad según sea necesario
     }
 }

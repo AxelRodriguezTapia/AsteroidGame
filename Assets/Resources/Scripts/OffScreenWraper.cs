@@ -5,52 +5,43 @@ using UnityEngine;
 public class OffScreenWrapper : MonoBehaviour
 {
     private Camera mainCamera; // Cámara principal
-    private float screenWidth; // Ancho de la pantalla en unidades del mundo
-    private float screenHeight; // Altura de la pantalla en unidades del mundo
+    private ScreenBounds screenBounds; // Límites de la pantalla
 
     void Start()
     {
         // Obtener la referencia a la cámara principal
         mainCamera = Camera.main;
-
+        screenBounds = GameObject.FindGameObjectWithTag("OnScreenBounds").GetComponent<ScreenBounds>();
         // Obtener el ancho y la altura de la pantalla en unidades del mundo
-        
     }
 
     void Update()
     {
-        screenWidth = mainCamera.orthographicSize*mainCamera.aspect; 
-        screenHeight = mainCamera.orthographicSize;
-        // Obtener la posición del objeto en el mundo
-        Vector3 objectPosition = transform.position;
-
-        // Verificar si el objeto ha salido por el lado derecho
-        if (objectPosition.x > screenWidth)
+        
+    }
+    void OnTriggerExit(Collider other)
+    {
+        //InverseTransformPoint(transform.position); Relativa
+        //TransformPoint(transform.position); Posicio Global
+        Vector3 pos = gameObject.transform.InverseTransformPoint(other.transform.position);
+        if(pos.x < -0.5 && pos.y < -0.5)
         {
-            // Colocar el objeto en el lado izquierdo
-            objectPosition.x = -screenWidth;
+            gameObject.transform.position = new Vector3(pos.x, pos.y, pos.z);
         }
-        // Verificar si el objeto ha salido por el lado izquierdo
-        else if (objectPosition.x < -screenWidth)
+       
+        if(pos.x > 0.5 && pos.y < -0.5)
         {
-            // Colocar el objeto en el lado derecho
-            objectPosition.x = screenWidth;
-        }
-
-        // Verificar si el objeto ha salido por la parte superior
-        if (objectPosition.y > screenHeight)
-        {
-            // Colocar el objeto en la parte inferior
-            objectPosition.y = -screenHeight;
-        }
-        // Verificar si el objeto ha salido por la parte inferior
-        else if (objectPosition.y < -screenHeight)
-        {
-            // Colocar el objeto en la parte superior
-            objectPosition.y = screenHeight;
+            gameObject.transform.position = new Vector3(-pos.x, pos.y, pos.z);
         }
 
-        // Actualizar la posición del objeto
-        transform.position = objectPosition;
+        if(pos.x < -0.5 && pos.y > 0.5){
+            gameObject.transform.position = new Vector3(-pos.x, pos.y, pos.z);
+
+        }
+
+        if(pos.x  0.5 && pos.y > 0.5){
+            gameObject.transform.position = new Vector3(-pos.x, pos.y, pos.z);
+
+        }
     }
 }
