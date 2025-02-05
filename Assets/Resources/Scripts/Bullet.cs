@@ -12,11 +12,14 @@ public class Bullet : MonoBehaviour
     {
         //rb.velocity = rb.velocity * speed;
         // Destruir la bala después de un tiempo (por ejemplo, 5 segundos)
-        Invoke("DestroyBullet",2f);
+        Invoke("DestroyBullet",5f);
     }
 
     public void DestroyBullet()
     {
         Destroy(gameObject);
     }
+
+    
+
 }
