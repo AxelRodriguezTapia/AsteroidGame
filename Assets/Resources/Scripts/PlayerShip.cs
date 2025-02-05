@@ -10,12 +10,14 @@ public class PlayerShip : MonoBehaviour
     private Rigidbody rb; // Referencia al Rigidbody del objeto
     public GameObject bulletPrefab; // Prefab de la bala
     public Transform firePoint; // Punto de disparo (donde se instanciará la bala)
+    private GameObject bulletAnchor; // Objeto que contendrá la bala
 
     // Start is called before the first frame update
     void Start()
     {
         // Obtener la referencia al Rigidbody
         rb = GetComponent<Rigidbody>();
+        bulletAnchor = GameObject.FindGameObjectWithTag("BulletAnchorTag");
     }
 
     void Update()
@@ -45,7 +47,7 @@ public class PlayerShip : MonoBehaviour
 
         // Instanciar la bala en el punto de disparo
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
+        bullet.transform.SetParent(bulletAnchor.transform); // Hacer que la bala sea hija del bulletAnchor
         // Obtener el Rigidbody de la bala y darle velocidad en la dirección en la que está mirando la torreta
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
         bulletRb.velocity = firePoint.up * fireSpeed; // Ajusta la velocidad según sea necesario
