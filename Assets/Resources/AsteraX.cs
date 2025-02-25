@@ -11,6 +11,7 @@ public class AstraX : MonoBehaviour
     public float spawnRate = 2.0f;
     public int clusterSize = 5; // Tamaño del grupo de asteroides
     public float clusterRadius = 0.5f; // Radio del grupo de asteroides
+    private int indexAsteroids = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +36,8 @@ public class AstraX : MonoBehaviour
         // Seleccionar un asteroide al azar para ser el padre
         var chosenAsteroid = AsteroidPrefabs[UnityEngine.Random.Range(0, AsteroidPrefabs.Length)];
         GameObject asteroidCluster = Instantiate(chosenAsteroid, pos, Quaternion.identity);
-        asteroidCluster.name = "AsteroidCluster_" + System.Guid.NewGuid().ToString();
+        asteroidCluster.name = "Asteroid"+indexAsteroids;
+        
 
         // Añadir un Rigidbody al objeto padre si no tiene uno
         Rigidbody clusterRb = asteroidCluster.GetComponent<Rigidbody>();
@@ -45,6 +47,7 @@ public class AstraX : MonoBehaviour
         }
         clusterRb.isKinematic = false;
         clusterRb.useGravity = false;
+        int indexChildAsteroids = 0;
 
         for (int i = 0; i < clusterSize; i++)
         {
@@ -53,8 +56,9 @@ public class AstraX : MonoBehaviour
             Vector3 asteroidPos = pos + offset;
             var childAsteroid = AsteroidPrefabs[UnityEngine.Random.Range(0, AsteroidPrefabs.Length)];
             GameObject asteroid = Instantiate(childAsteroid, asteroidPos, Quaternion.identity);
+            asteroid.name = "Asteroid"+indexAsteroids+"_"+indexChildAsteroids;
             asteroid.transform.parent = asteroidCluster.transform; // Hacer que el asteroide sea hijo del objeto vacío
-
+            indexChildAsteroids++;
             // Hacer que los asteroides hijos sean cinemáticos para que se muevan con el padre
             Rigidbody rb = asteroid.GetComponent<Rigidbody>();
             if (rb != null)
@@ -71,7 +75,8 @@ public class AstraX : MonoBehaviour
 
         // Darle un empujoncito al asteroide padre
         asteroidCluster.GetComponent<Asteroid>().InitVelocity();
-
+        indexAsteroids++;
         Invoke("SpawnAsteroid", spawnRate);
+        
     }
 }

@@ -66,13 +66,15 @@ public class Asteroid : MonoBehaviour
     public void OnCollisionEnter(Collision coll)
     {
         GameObject otherGO = coll.gameObject;
-
+        
         if (otherGO.tag == "Bullet" || otherGO.tag == "Player")
         {
             if (transform.parent != null)
             {
                 // Delegar la colisión al padre
-                transform.parent.GetComponent<Asteroid>().AsteroidHitByBullet(otherGO);
+                Debug.Log("Ha picat a: "+transform.parent.name);
+                transform.parent.GetComponent<Asteroid>().OnCollisionEnter(coll);
+                return;
             }
             else
             {
@@ -104,13 +106,19 @@ public class Asteroid : MonoBehaviour
             foreach (Transform child in transform)
             {
                 children.Add(child);
+                Vector3 pos = new Vector3(child.position.x, child.position.y, 0);
+                child.transform.position = pos;
             }
+            List<Transform> children1 = children.GetRange(0, children.Count / 2);
+            List<Transform> children2 = children.GetRange(children.Count / 2, children.Count - (children.Count / 2));
+
 
             // Crear dos nuevos clusters
-            CreateNewCluster(children.GetRange(0, children.Count / 2));
-            CreateNewCluster(children.GetRange(children.Count / 2, children.Count - children.Count / 2));
+            Debug.Log("Children 1: " + children1.Count);
+            CreateNewCluster(children1);//0 - 5
+            Debug.Log("Children 2: " + children2.Count);
+            CreateNewCluster(children2);//6 - 10
         }
-
         Destroy(gameObject);
     }
 
