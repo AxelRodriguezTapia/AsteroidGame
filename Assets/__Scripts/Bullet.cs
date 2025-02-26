@@ -35,5 +35,14 @@ public class Bullet : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    void OnCollisionEnter(Collision coll)
+    {
+        GameObject otherGO = coll.gameObject;
+        if(otherGO.tag != "Player" && otherGO.tag != "")
+        {
+            Destroy(gameObject);
+        }
+        }
     
 }
