@@ -354,8 +354,8 @@ MonoBehaviour:
   - {fileID: 1317570492134680, guid: a6d3ccfc58a1f41368479aabb6050561, type: 3}
   player: {fileID: 1199415303}
   numberOfAsteroids: 0
-  spawnRate: 10
-  clusterSize: 10
+  spawnRate: 120
+  clusterSize: 40
   clusterRadius: 0.5
 --- !u!1 &1063172399
 GameObject:
