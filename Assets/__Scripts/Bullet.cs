@@ -4,8 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(OffScreenWrapper))]
-public class Bullet : MonoBehaviour
-{
+public class Bullet : MonoBehaviour {
     static private Transform _BULLET_ANCHOR;
     static Transform BULLET_ANCHOR {
         get {
@@ -19,6 +18,7 @@ public class Bullet : MonoBehaviour
 
     public float    bulletSpeed = 20;
     public float    lifeTime = 2;
+    public bool     bDidWrap = false;
 
     void Start()
     {
@@ -35,14 +35,5 @@ public class Bullet : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
-    void OnCollisionEnter(Collision coll)
-    {
-        GameObject otherGO = coll.gameObject;
-        if(otherGO.tag != "Player" && otherGO.tag != "")
-        {
-            Destroy(gameObject);
-        }
-        }
     
 }
