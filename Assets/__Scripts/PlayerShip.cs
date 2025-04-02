@@ -29,7 +29,9 @@ public class PlayerShip : MonoBehaviour
     [Header("Set in Inspector")]
     public float        shipSpeed = 10f;
     public GameObject   bulletPrefab;
-
+    public static int scorePlayer;
+    public AsteroidsScriptableObject asteroidsSO;
+    
     Rigidbody           rigid;
 
 
@@ -39,6 +41,7 @@ public class PlayerShip : MonoBehaviour
 
         // NOTE: We don't need to check whether or not rigid is null because of [RequireComponent()] above
         rigid = GetComponent<Rigidbody>();
+        scorePlayer = 0;
     }
 
 
@@ -92,5 +95,15 @@ public class PlayerShip : MonoBehaviour
         {
             return S.transform.position;
         }
+    }
+
+    static public void setScore(int score)
+    {
+        scorePlayer += score;
+    }
+
+    static public int getScore()
+    {
+        return scorePlayer;
     }
 }

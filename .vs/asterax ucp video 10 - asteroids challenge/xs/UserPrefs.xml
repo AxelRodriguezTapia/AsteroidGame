@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{8224B910-92A3-A6D2-8E44-D34BC1FC4E41}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/__Scripts/OffScreenWrapper.cs">
+    <Files>
+      <File FileName="Assets/__Scripts/OffScreenWrapper.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.AsteraX_220UCP_220Video_22010_220-_220Asteroids_220Challenge PreferredExecutionTarget="Unity.Editor" />
+</Properties>
