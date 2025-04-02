@@ -94,19 +94,7 @@ public class AsteraX : MonoBehaviour
 
     void Start()
     {
-#if DEBUG_AsteraX_LogMethods
-        Debug.Log("AsteraX:Start()");
-#endif
 
-        ASTEROIDS = new List<Asteroid>();
-		AddScore(0);
-        
-        // Spawn the parent Asteroids, child Asteroids are taken care of by them
-        for (int i = 0; i < 3; i++)
-        {
-            SpawnParentAsteroid(i);
-        }
-        GAME_STATE = eGameState.level;
     }
 
 
@@ -238,6 +226,21 @@ public class AsteraX : MonoBehaviour
     static public void GameOver()
     {
         _S.EndGame();
+    }
+
+    static public void StartGame()
+    {
+#if DEBUG_AsteraX_LogMethods
+        Debug.Log("AsteraX:Start()");
+#endif
+        ASTEROIDS = new List<Asteroid>();
+		AddScore(0);
+        // Spawn the parent Asteroids, child Asteroids are taken care of by them
+        for (int i = 0; i < 3; i++)
+        {
+            S.SpawnParentAsteroid(i);
+        }
+        GAME_STATE = eGameState.level;
     }
     
     
