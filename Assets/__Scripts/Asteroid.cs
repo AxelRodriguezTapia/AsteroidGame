@@ -2,11 +2,9 @@
 //#define DEBUG_Asteroid_TestOOBVel 
 //#define DEBUG_Asteroid_ShotOffscreenDebugLines
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 #if DEBUG_Asteroid_TestOOBVel
 using UnityEditor;
@@ -22,13 +20,10 @@ public class Asteroid : MonoBehaviour
 
     Rigidbody           rigid; // protected
     OffScreenWrapper    offScreenWrapper;
-    public AsteroidsScriptableObject asteroidsSO;
-
 
 #if DEBUG_Asteroid_ShotOffscreenDebugLines
-    [Header("ShotOffscreenDebugLines")]
-	bool                trackOffscreen;
-	Vector3             trackOffscreenOrigin;
+    bool                trackOffscreen;
+    Vector3             trackOffscreenOrigin;
 #endif
     private void Awake()
     {
@@ -77,7 +72,7 @@ public class Asteroid : MonoBehaviour
     public void InitAsteroidParent()
     {
 #if DEBUG_Asteroid_ShotOffscreenDebugLines
-		Debug.LogWarning(gameObject.name+" InitAsteroidParent() "+Time.time);
+        Debug.LogWarning(gameObject.name+" InitAsteroidParent() "+Time.time);
 #endif
         offScreenWrapper.enabled = true;
         rigid.isKinematic = false;
@@ -114,11 +109,11 @@ public class Asteroid : MonoBehaviour
 #endif
 
 #if DEBUG_Asteroid_ShotOffscreenDebugLines
-			Debug.DrawLine(transform.position, transform.position+vel, Color.red, 60);
-			Debug.DrawLine(transform.position+Vector3.down, transform.position+Vector3.up, Color.cyan, 60);
+            Debug.DrawLine(transform.position, transform.position+vel, Color.red, 60);
+            Debug.DrawLine(transform.position+Vector3.down, transform.position+Vector3.up, Color.cyan, 60);
             Debug.DrawLine(transform.position+Vector3.left, transform.position+Vector3.right, Color.cyan, 60);
-			trackOffscreen = true;
-			trackOffscreenOrigin = transform.position;
+            trackOffscreen = true;
+            trackOffscreenOrigin = transform.position;
 #endif
 
         }
@@ -141,12 +136,12 @@ public class Asteroid : MonoBehaviour
     }
 
 #if DEBUG_Asteroid_ShotOffscreenDebugLines
-	private void FixedUpdate()
-	{
-		if (trackOffscreen) {
-			Debug.DrawLine(trackOffscreenOrigin, transform.position, Color.yellow, 0.1f);
-		}
-	}
+    private void FixedUpdate()
+    {
+        if (trackOffscreen) {
+            Debug.DrawLine(trackOffscreenOrigin, transform.position, Color.yellow, 0.1f);
+        }
+    }
 #endif
 
     // NOTE: Allowing parentIsAsteroid and parentAsteroid to call GetComponent<> every
@@ -197,14 +192,7 @@ public class Asteroid : MonoBehaviour
             if (otherGO.tag == "Bullet")
             {
                 Destroy(otherGO);
-                AsteraX.addScore(AsteraX.AsteroidsSO.pointsForAsteroidSize[size]);
-                Debug.Log(AsteraX.getPlayerScore());
-            }
-
-            if (otherGO.transform.root.gameObject.tag == "Player")
-            {
-                Destroy(otherGO);
-                AsteraX.playerDie();
+                AsteraX.AddScore(AsteraX.AsteroidsSO.pointsForAsteroidSize[size]);
             }
 
             if (size > 1)
@@ -223,16 +211,29 @@ public class Asteroid : MonoBehaviour
                 }
             }
 
+            InstantiateParticleSystem();
             Destroy(gameObject);
         }
     }
 
+    void InstantiateParticleSystem() {
+        GameObject particleGO = Instantiate<GameObject>(AsteraX.AsteroidsSO.GetAsteroidParticlePrefab(),
+                                                        transform.position, Quaternion.identity);
+        ParticleSystem particleSys = particleGO.GetComponent<ParticleSystem>();
+        ParticleSystem.MainModule main = particleSys.main;
+        main.startLifetimeMultiplier = size * 0.5f;
+        ParticleSystem.EmissionModule emitter = particleSys.emission;
+        ParticleSystem.Burst burst = emitter.GetBurst(0);
+        ParticleSystem.MinMaxCurve burstCount = burst.count;
+        burstCount.constant = burstCount.constant * size;
+        burst.count = burstCount;
+        emitter.SetBurst(0, burst);
+    }
 
     private void Update()
     {
         immune = false;
     }
-
 
     static public Asteroid SpawnAsteroid()
     {

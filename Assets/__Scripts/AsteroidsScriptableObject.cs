@@ -20,20 +20,21 @@ public class AsteroidsScriptableObject : ScriptableObject
 	public float        asteroidScale = 0.75f;
     public int          numSmallerAsteroidsToSpawn = 2;
     public int[]        pointsForAsteroidSize = {0, 400, 200, 100};
-    public GameObject player;
 
 	public GameObject[] asteroidPrefabs;
 
+	public GameObject[] asteroidParticlePrefabs;
 
     public GameObject GetAsteroidPrefab()
     {
         int ndx = Random.Range(0, asteroidPrefabs.Length);
         return asteroidPrefabs[ndx];
     }
-
-    public GameObject GetPlayerPrefab()
-    {
-        return player;
-    }
+        
+	public GameObject GetAsteroidParticlePrefab()
+	{
+		int ndx = Random.Range(0,asteroidParticlePrefabs.Length);
+		return asteroidParticlePrefabs[ndx];
+	}
         
 }
