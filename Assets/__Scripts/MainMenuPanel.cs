@@ -21,12 +21,19 @@ public class MainMenuPanel : ActiveOnlyDuringSomeGameStates
 
     private Image img;
     private Button startButton;
+    Text infoText;
     private float stateStartTime, stateDuration;
     private eMainMenuPanelState nextState;
 
     override public void Awake()
     {
         img = GetComponent<Image>();
+        Transform infoT = transform.Find("InfoText");
+        if (infoT == null) {
+            Debug.LogWarning("LevelAdvancePanel:Start() - LevelAdvancePanel lacks a child named InfoText.");
+            return;
+        }
+        infoText = infoT.GetComponent<Text>();
 
         // Buscar el botón hijo
         Transform buttonT = transform.Find("StartButton");
@@ -73,6 +80,7 @@ public class MainMenuPanel : ActiveOnlyDuringSomeGameStates
                 img.color = Color.clear;
                 stateDuration = fadeTime * 0.2f;
                 nextState = eMainMenuPanelState.fadeIn2;
+                infoText.text = "Level: "+AsteraX.levelIndex;
                 break;
 
             case eMainMenuPanelState.fadeIn2:

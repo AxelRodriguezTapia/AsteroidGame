@@ -50,7 +50,7 @@ public class PlayerShip : MonoBehaviour
     {
         S = this;
 
-        JUMPS = startingJumps;
+        JUMPS = AsteraX.NUM_JUMPLS;
         
         // NOTE: We don't need to check whether or not rigid is null because of [RequireComponent()] above
         rigid = GetComponent<Rigidbody>();
@@ -107,6 +107,7 @@ public class PlayerShip : MonoBehaviour
         }
 
         JUMPS--;
+        AsteraX.NUM_JUMPLS--;
         if (JUMPS < 0) {
             gameObject.SetActive(false);
             AsteraX.GameOver();

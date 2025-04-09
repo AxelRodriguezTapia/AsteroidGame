@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class AsteraX : MonoBehaviour
 {
@@ -18,9 +19,12 @@ public class AsteraX : MonoBehaviour
     static UnityEngine.UI.Text  	SCORE_GT;
     // This is an automatic property
     public static int           	SCORE { get; private set; }
+    public static int           	MAX_SCORE = 0;
+    public static int          	    NUM_JUMPLS = 3;
     
     const float MIN_ASTEROID_DIST_FROM_PLAYER_SHIP = 5;
     const float DELAY_BEFORE_RELOADING_SCENE = 4;
+    public static int levelIndex = 1;
 
 	public delegate void CallbackDelegate(); // Set up a generic delegate type.
     static public CallbackDelegate GAME_STATE_CHANGE_DELEGATE;
@@ -53,8 +57,8 @@ public class AsteraX : MonoBehaviour
     public AsteroidsScriptableObject asteroidsSO;
 
     [Header("This will be set by Remote Settings")]
-    public string levelProgression = "1:3/2,2:4/2,3:3/3,4:4/3,5:5/3,6:3/4,7:4/4,8:5/4,9:6/4,10:3/5";
-
+    public static string levelProgression = "1:3/2,2:4/2,3:3/3,4:4/3,5:5/3,6:3/4,7:4/4,8:5/4,9:6/4,10:3/5";
+    public int maxLevel = -1;
     [Header("These reflect static fields and are otherwise unused")]
     [SerializeField]
     [Tooltip("This private field shows the game state in the Inspector and is set by the "
@@ -92,30 +96,60 @@ public class AsteraX : MonoBehaviour
         AsteraX.GAME_STATE = AsteraX.eGameState.none;
     }
 
+    void Update()
+{
+    // Obtener todos los GameObjects en la escena
+    GameObject[] allObjects = FindObjectsOfType<GameObject>();
+
+    // Filtrar los que contienen "Asteroid_"
+    bool hasAsteroids = allObjects.Any(obj => obj.name.Contains("Asteroid_"));
+
+    // Si no hay asteroides y estamos en el estado Level, cambiar a postLevel
+    if (!hasAsteroids && _GAME_STATE == eGameState.level)
+    {
+        levelIndex++;
+
+        // Verificar si se ha alcanzado el nivel máximo
+        if (levelIndex > maxLevel)
+        {
+            Debug.Log("Nivel máximo alcanzado. Finalizando el juego.");
+            GAME_STATE = eGameState.gameOver;
+            return;
+        }
+
+        S.PostGame();
+        Debug.Log("Todos los asteroides han sido destruidos. Cambiando de nivel: " + levelIndex);
+    }
+}
+
     void Start()
     {
 
     }
 
 
-    void SpawnParentAsteroid(int i)
-    {
+    static void SpawnParentAsteroid(int i, int childAsteroids)
+{
 #if DEBUG_AsteraX_LogMethods
-        Debug.Log("AsteraX:SpawnParentAsteroid("+i+")");
+    Debug.Log("AsteraX:SpawnParentAsteroid(" + i + ", " + childAsteroids + ")");
 #endif
+    Asteroid ast = Asteroid.SpawnAsteroid();
+    ast.gameObject.name = "Asteroid_" + i.ToString("00");
 
-        Asteroid ast = Asteroid.SpawnAsteroid();
-        ast.gameObject.name = "Asteroid_" + i.ToString("00");
-        // Find a good location for the Asteroid to spawn
-        Vector3 pos;
-        do
-        {
-            pos = ScreenBounds.RANDOM_ON_SCREEN_LOC;
-        } while ((pos - PlayerShip.POSITION).magnitude < MIN_ASTEROID_DIST_FROM_PLAYER_SHIP);
+    // Trobar una bona ubicació per a l'asteroide
+    Vector3 pos;
+    do
+    {
+        pos = ScreenBounds.RANDOM_ON_SCREEN_LOC;
+    } while ((pos - PlayerShip.POSITION).magnitude < MIN_ASTEROID_DIST_FROM_PLAYER_SHIP);
 
-        ast.transform.position = pos;
-        ast.size = asteroidsSO.initialSize;
-    }
+    ast.transform.position = pos;
+
+    // Configurar la mida inicial i els fills segons la configuració del nivell
+    ast.size = 3; // Mida inicial fixa o configurable
+    ast.childAsteroids = childAsteroids; // Assignar el nombre d'asteroides fills
+    ast.spawnChildAsteroids(); // Cridar al mètode per generar els fills
+}
 
 
     
@@ -124,6 +158,15 @@ public class AsteraX : MonoBehaviour
         GAME_STATE = eGameState.gameOver;
         Invoke("ReloadScene", DELAY_BEFORE_RELOADING_SCENE);
     }
+
+    void PostGame()
+    {
+        // This is called when the game is over and the player has no more lives left.
+        // The game will wait a few seconds and then reload the scene to restart the game.
+        GAME_STATE = eGameState.postLevel;
+        Invoke("ReloadScene", DELAY_BEFORE_RELOADING_SCENE);
+    }
+    
 
     void ReloadScene()
     {
@@ -134,6 +177,37 @@ public class AsteraX : MonoBehaviour
         //  This bug does not cause any issues outside of the Editor.
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
+
+    static void ConfigureLevel(int level)
+{
+    // Trobar la configuració del nivell actual a partir de la cadena levelProgression
+    string[] levels = levelProgression.Split(',');
+    if (S.maxLevel == -1)
+    {
+        S.maxLevel = levels.Length; // El nombre de nivells en la cadena
+    }
+    string currentLevelConfig = levels.FirstOrDefault(l => l.StartsWith(level + ":"));
+
+    if (string.IsNullOrEmpty(currentLevelConfig))
+    {
+        Debug.LogError("No s'ha trobat configuració per al nivell: " + level);
+        return;
+    }
+
+    // Analitzar la configuració del nivell (format: "1:3/2")
+    string[] parts = currentLevelConfig.Split(':');
+    string[] asteroidConfig = parts[1].Split('/');
+
+    int initialAsteroids = int.Parse(asteroidConfig[0]);
+    int childAsteroids = int.Parse(asteroidConfig[1]);
+
+    Debug.Log($"Configurant Nivell {level}: {initialAsteroids} asteroides inicials, {childAsteroids} asteroides fills.");
+    // Configurar els asteroides inicials
+    for (int i = 0; i < initialAsteroids; i++)
+    {
+        AsteraX.SpawnParentAsteroid(i, childAsteroids);
+    }
+}
 
 
 
@@ -236,11 +310,9 @@ public class AsteraX : MonoBehaviour
         ASTEROIDS = new List<Asteroid>();
 		AddScore(0);
         // Spawn the parent Asteroids, child Asteroids are taken care of by them
-        for (int i = 0; i < 3; i++)
-        {
-            S.SpawnParentAsteroid(i);
-        }
+        AsteraX.ConfigureLevel(levelIndex);
         GAME_STATE = eGameState.level;
+        Debug.Log("MAX_SCORE: "+MAX_SCORE);
     }
     
     
@@ -262,11 +334,11 @@ public class AsteraX : MonoBehaviour
             SCORE = 0;
         }
         // SCORE holds the definitive score for the game.
-        SCORE += num;
+        MAX_SCORE += num;
 
         // Show the score on screen. For info on numeric formatting like "N0", see:
         //  https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings
-        SCORE_GT.text = SCORE.ToString("N0");
+        SCORE_GT.text = MAX_SCORE.ToString("N0");
     }
 
 
