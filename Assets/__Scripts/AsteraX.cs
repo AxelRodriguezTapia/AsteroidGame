@@ -98,6 +98,22 @@ public class AsteraX : MonoBehaviour
 
     void Update()
 {
+
+    //Pause metode
+    if (Input.GetKeyDown(KeyCode.P))
+    {
+        if (GAME_STATE == eGameState.level)
+        {
+            GAME_STATE = eGameState.preLevel;
+            Time.timeScale = 0; // Pausar el joc
+        }
+        else if (GAME_STATE == eGameState.preLevel)
+        {
+            GAME_STATE = eGameState.level;
+            Time.timeScale = 1; // Reprendre el joc
+        }
+
+    }
     // Obtener todos los GameObjects en la escena
     GameObject[] allObjects = FindObjectsOfType<GameObject>();
 

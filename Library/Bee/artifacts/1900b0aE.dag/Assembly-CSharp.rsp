@@ -384,6 +384,7 @@
 "Assets/__Scripts/MainMenuPanel.cs"
 "Assets/__Scripts/OffScreenWrapper.cs"
 "Assets/__Scripts/OnlyEmitParticlesInBounds.cs"
+"Assets/__Scripts/PausePanel.cs"
 "Assets/__Scripts/PlayerShip.cs"
 "Assets/__Scripts/PositionRelativeToAnotherGameObject.cs"
 "Assets/__Scripts/ScaleSpriteToFillOrthographicCamera.cs"

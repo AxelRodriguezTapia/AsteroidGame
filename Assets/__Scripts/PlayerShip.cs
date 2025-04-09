@@ -82,6 +82,9 @@ public class PlayerShip : MonoBehaviour
 
     void Fire()
     {
+        if(AsteraX.GAME_STATE != AsteraX.eGameState.level){
+            return;
+        }
         // Get direction to the mouse
         Vector3 mPos = Input.mousePosition;
         mPos.z = -Camera.main.transform.position.z;
