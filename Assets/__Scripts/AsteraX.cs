@@ -136,11 +136,22 @@ public class AsteraX : MonoBehaviour
         S.PostGame();
         Debug.Log("Todos los asteroides han sido destruidos. Cambiando de nivel: " + levelIndex);
     }
+    if(_GAME_STATE == eGameState.gameOver)
+    {
+        Debug.Log("El juego ha terminado. Reiniciando en " + DELAY_BEFORE_RELOADING_SCENE + " segundos.");
+        EndGame();
+        _GAME_STATE = eGameState.none;
+        levelIndex = 1; // Reiniciar el índice del nivel
+        MAX_SCORE = 0; // Reiniciar la puntuación máxima
+        NUM_JUMPLS = 3; // Reiniciar el número de saltos
+        
+
+    }
 }
 
     void Start()
     {
-
+        
     }
 
 
@@ -191,6 +202,7 @@ public class AsteraX : MonoBehaviour
         //  during gameplay within the Editor causes the lighting to all go 
         //  dark and the engine to think that it needs to rebuild the lighting.
         //  This bug does not cause any issues outside of the Editor.
+        Debug.Log("AsteraX:ReloadScene() - Reloading scene.");
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
